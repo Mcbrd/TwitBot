@@ -21,7 +21,7 @@ namespace TwitBot
             //while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape))
             //{
                 
-         while (true)
+            while (true)
             {
             var lines = File.ReadAllLines("liners.txt");
             var rando = new Random();
@@ -29,7 +29,7 @@ namespace TwitBot
             string line = lines[randomLineNumber];
 
             PostTweet(line);
-            Thread.Sleep(600000);
+            Thread.Sleep(60000);
             }
 
             
@@ -66,11 +66,23 @@ namespace TwitBot
 
         //}
 
+        static void getText()
+        { 
+        }
 
         static void PostTweet(string textToTweet)
         {
-            var service = new TwitterService();
-            //service.AuthenticateWith();
+            var key = File.ReadAllLines("key.txt");
+            string keyResult = string.Join("", key);
+            var secret = File.ReadAllLines("secret.txt");
+            string secretResult = string.Join("", secret);
+            var service = new TwitterService(keyResult, secretResult);
+
+            var token = File.ReadAllLines("Token.txt");
+            string tokenResut = string.Join("", token);
+            var tokenSecret = File.ReadAllLines("TokenSecret.txt");
+            string tokenSecretResult = string.Join("", tokenSecret);
+            service.AuthenticateWith(tokenResut, tokenSecretResult);
 
 
             SendTweetOptions tweet = new SendTweetOptions();
